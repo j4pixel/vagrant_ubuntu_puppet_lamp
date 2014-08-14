@@ -9,7 +9,7 @@ file {'/etc/localtime':
 }
 
 #Masks an shel error when provisioning inside vagrant with rvmsudo  
-file_line { 'sudo_rule':
+file_line { 'modify-bashrc':
    path => '/home/vagrant/.bashrc',
    line => 'export rvmsudo_secure_path=1',
 }

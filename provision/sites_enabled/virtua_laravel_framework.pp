@@ -67,6 +67,7 @@ mysql_database { $appname2:
   ensure  => 'present',
   charset => 'utf8',
   collate => 'utf8_unicode_ci',
+  require =>  Class['mysql::server']
 }
 
 #vcsrepo { "/vagrant/approot/${appname2}/workbench/virtua/framework":

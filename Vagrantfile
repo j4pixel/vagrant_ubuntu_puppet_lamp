@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = " http://files.vagrantup.com/precise32.box"
+  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
   
   #Define localhostname
   config.vm.hostname = "localdev"
@@ -50,8 +50,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #group: "vagrant", 
     #rsync__exclude: ".svn/"
 
- config.vm.synced_folder "d:/vagrant/localdev/approot/smb", "/var/www/smb/", 
-    type: "smb"
+# config.vm.synced_folder "d:/vagrant/localdev/approot/smb", "/var/www/smb/", 
+#    type: "smb"
     #owner: "www-data",  
     #group: "vagrant"
 	#:mount_options => ["file_mode=0664,dir_mode=0775"]
@@ -62,13 +62,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   
   #Provision default needed elements:
-#    config.vm.provision "shell" do |s|
-#    s.path = "provision/shell/initial-setup.sh"
-#    s.args = "/vagrant/provision"
-#  end 
+  config.vm.provision "shell" do |s|
+    s.path = "provision/shell/initial-setup.sh"
+    s.args = "/vagrant/provision"
+  end 
   
-  #config.vm.provision :shell, :path => "provision/shell/install-ruby.sh"
-  #config.vm.provision :shell, :path => "provision/shell/install-puppet.sh"
+  config.vm.provision :shell, :path => "provision/shell/install-ruby.sh"
+  config.vm.provision :shell, :path => "provision/shell/install-puppet.sh"
  
   # Enable the Puppet provisioner
   config.vm.provision :puppet do |puppet|

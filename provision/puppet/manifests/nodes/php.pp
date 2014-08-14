@@ -164,6 +164,7 @@ define set_ini (
     value   => $value,    
 	target  => $target,
     notify  => Service[$php_webserver_service],	
+	require =>  Class['Php']	
   }
 }
 

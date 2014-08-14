@@ -39,5 +39,6 @@ mysql_database { $appname4:
   ensure  => 'present',
   charset => 'utf8',
   collate => 'utf8_unicode_ci',
+  require =>  Class['mysql::server']
 }
 

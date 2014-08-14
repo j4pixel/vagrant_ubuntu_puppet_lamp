@@ -25,28 +25,21 @@
 # [*entry*]
 #   Augeas path to entry to be modified.
 #
-# [*value*]
-#   Value to set
-#
 # [*ensure*]
 #   Standard puppet ensure variable
 #
 # [*target*]
-#   Which target to apply changes to can be either 'cli', 'apache' or 'both'. Default is 'both' 
+#   Which php.ini to manipulate. Default is $php::config_file
 #
-# [*target_cli*]
-#   Which php.ini to manipulate for cli target. Default is /etc/php5/cli/php.ini
-#
-# [*target_apache*]
-#   Which php.ini to manipulate for apache target. Default is /etc/php5/apache2/php.ini
+# [*value*]
+#   Value to set
 #
 # == Examples
 #
 # php::augeas {
 #   'php-memorylimit':
 #     entry  => 'PHP/memory_limit',
-#     value  => '128M',
-#	  target => 'apache';
+#     value  => '128M';
 #   'php-error_log':
 #     entry  => 'PHP/error_log',
 #     ensure => absent;
@@ -60,53 +53,24 @@
 #
 define php::augeas (
   $entry,
-  $value  = '',
   $ensure = present,
-  $target = 'both', 
-  $target_cli = '/etc/php5/cli/php.ini',
-  $target_apache = '/etc/php5/apache2/php.ini',
+  $target = $php::config_file,
+  $value  = '',
   ) {
+
+  include php
+
+  $service = $php::service
 
   $changes = $ensure ? {
     present => [ "set '${entry}' '${value}'" ],
     absent  => [ "rm '${entry}'" ],
   }
-  
-  case $target {
-    'cli': {
-	  augeas_cli{"php_ini_cli-${name}": changes => $changes, target_file => $target_cli}
-    }
-	'apache': {
-	  augeas_apache{"php_ini_apache-${name}": changes => $changes, target_file => $target_apache} 
-    }
-    default: {
-	  augeas_cli{"php_ini_cli-${name}": changes => $changes, target_file => $target_cli}
-	  augeas_apache{"php_ini_apache-${name}": changes => $changes, target_file => $target_apache} 
-    }
-  } # End Case
-}
 
-define php::augeas_cli($changes, $target_file){     
-  augeas { $title:
-    incl    => $target_file,
+  augeas { "php_ini-${name}":
+    incl    => $target,
     lens    => 'Php.lns',
     changes => $changes,
-    require => [ 
-      Package['php5-cli'],
-      Exec['fix augeas']
-    ],
-  }  		
-}
+  }
 
-define php::augeas_apache($changes, $target_file){     
-  augeas { $title:
-    incl    => $target_file,
-    lens    => 'Php.lns',
-    changes => $changes,
-	notify  => Service['apache2'],
-	require => [ 
-	  Package['php5'],
-	  Exec['fix augeas']
-	],
-  }  		
 }

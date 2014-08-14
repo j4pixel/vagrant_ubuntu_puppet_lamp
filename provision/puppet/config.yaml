@@ -1,0 +1,68 @@
+packages:
+    php_ppa:
+        name: 'ppa:ondrej/php5-oldstable'
+    modules:
+        - curl
+        - vim
+        - htop
+        - python
+        - g++
+        - make
+        - git
+        - subversion
+apache:
+    install: '1'
+    settings:
+        user: www-data
+        group: www-data
+        default_vhost: false
+        manage_user: false
+        manage_group: false
+        sendfile: 0
+    modules:
+        - rewrite
+        - ssl
+php:
+    install: '1'
+    composer: '1'
+    composer_home: ''
+    modules:
+        php:
+            - cli
+            - intl
+            - mcrypt
+            - mysql
+            - gd
+            - curl
+            - sqlite
+            - imagick
+            - apc
+        pear:
+            - pear.phpunit.de/PHPUnit
+        pecl:
+            - pecl_http
+    ini:
+        PHP/memory_limit: '512M'		
+        PHP/post_max_size : '11M'
+        PHP/upload_max_filesize : '10M'
+        PHP/error_reporting : 'E_ALL & ~E_DEPRECATED'
+        PHP/display_errors : 'On'
+        PHP/short_open_tag : 'On'
+        Date/date.timezone: 'Europe/Zurich'
+    mod_php: 1
+xdebug:
+    install: 0
+    settings:
+        xdebug.default_enable: '1'
+        xdebug.remote_autostart: '0'
+        xdebug.remote_connect_back: '1'
+        xdebug.remote_enable: '1'
+        xdebug.remote_handler: dbgp
+        xdebug.remote_port: '9000'
+mysql:
+    install: '1'
+    root_password: 'd3v0p5'
+redis:
+    install: 0
+    settings:
+        conf_port: '6379'

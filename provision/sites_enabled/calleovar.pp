@@ -1,4 +1,4 @@
-$appname3 = 'calleovar'
+$appname3 = 'calleo'
 
 # make sure app directory is created
 file {"/var/www/${appname3}":
@@ -12,25 +12,30 @@ file {"/var/www/${appname3}":
 apache::vhost { "${appname3}.local":
   port    => '80',
   docroot => "/var/www/${appname3}/www/",
+  docroot_owner => 'www-data',
+  docroot_group => 'vagrant',
   directories  => [ 
 	{ path           => "/var/www/${appname3}/www/", 
 	  allow_override => ['All'], 
-	  #WARNING: Space needed at the end of each directory indexes
-	  directoryindex => ['index.php ','index.html '],
-	}, 
+	  options => ['Indexes', 'FollowSymLinks'],
+	  #directoryindex => ['index.php','index.html'],
+	}
   ], 
+# require  => File["/var/www/${appname3}/www"],
 }
 
 apache::vhost { "${appname3}-ssl.local":
   port    => '443',
   ssl     => true,
   docroot => "/var/www/${appname3}/www/",
+  docroot_owner => 'www-data',
+  docroot_group => 'vagrant',
   directories  => [ 
 	{ path           => "/var/www/${appname3}/www/", 
 	  allow_override => ['All'], 
-	  #WARNING: Space needed at the end of each directory indexes
-	  directoryindex => ['index.php ','index.html '],
-	}, 
+	  options => ['Indexes', 'FollowSymLinks'],
+	  #directoryindex => ['index.php','index.html'],
+	}
   ], 
   require  => File["/var/www/${appname3}/www"],
 }

@@ -1,0 +1,50 @@
+# List of PHP var to be set 
+  set_php_var {
+    'post_max_size':       	value => '10M';
+    'upload_max_filesize': 	value => '10M';
+	'error_reporting':	   	value => 'E_ALL \& ~E_DEPRECATED';
+	'display_errors': 		value => 'On';
+	'memory_limit': 		value => '512M';
+	'date.timezone': 		value => 'Europe\/Zurich';
+	'short_open_tag': 		value => 'On';
+  }
+  
+  # Set PHP variables in /etc/php5/apache2/php.ini and /etc/php5/cli/php.ini
+  define set_php_var($value) {
+	exec { "sed -i 's/^;*[[:space:]]*$name[[:space:]]*=.*$/$name = $value/g' /etc/php5/apache2/php.ini":
+      unless  => "grep -xqe '$name[[:space:]]*=[[:space:]]*$value' -- /etc/php5/apache2/php.ini",
+      require => Package['php5'],
+      notify  => Service['apache2'];
+    }
+	exec { "sed -i 's/^;*[[:space:]]*$name[[:space:]]*=.*$/$name = $value/g' /etc/php5/cli/php.ini":
+      unless  => "grep -xqe '$name[[:space:]]*=[[:space:]]*$value' -- /etc/php5/cli/php.ini",
+      require => Package['php5'],      
+    }
+ }
+ 
+ # Check arguments
+    raise(Puppet::ParseError, 'augeas(): content must be a string') unless content.is_a?(String)
+    raise(Puppet::ParseError, 'augeas(): lens must be a string') unless lens.is_a?(String)
+    raise(Puppet::ParseError, 'augeas(): changes must be an array') unless changes.is_a?(Array)
+	
+   
+# define set_var_in_apache_php_config($varname = $title, $value){
+#	set_var_in_file{$varname: 
+#		value => $value, 
+#		file => '/etc/php5/apache2/php.ini'
+#	}
+# }
+ 
+# set_var_in_apache_php_config {
+#    'post_max_size':       	value => '10M';
+#    'upload_max_filesize': 	value => '10M';
+# }
+ 
+# define set_var_in_file($varname = $title, $value, $file) {
+#	exec { "sudo sed -i 's/^;*[[:space:]]*$varname[[:space:]]*=.*$/$varname = $value/g' $file":
+#	  unless  => "grep -xqe '$varname[[:space:]]*=[[:space:]]*$value' -- $file",
+#      require => Package['php5'],
+#      notify  => Service['apache2'];
+#	}
+#  }
+ 	

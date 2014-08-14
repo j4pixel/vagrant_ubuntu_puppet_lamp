@@ -40,17 +40,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #Configure sync folders
   config.vm.synced_folder "./", "/vagrant", disabled: true
   config.vm.synced_folder "provision", "/vagrant/provision/"
-  config.vm.synced_folder "d:/vagrant/localdev/approot/calleo/", "/var/www/calleo/"
+  config.vm.synced_folder "d:/www/calleo_all/calleo/", "/var/www/calleo/"
     #group: 'www-data', owner: 'www-data', mount_options: ["dmode=775", "fmode=764"]
  
- #config.vm.synced_folder "d:/vagrant/localdev/approot/sync/", "/var/www/sync/", 
+ #config.vm.synced_folder "d:/www/calleo_all/calleo_sync/", "/var/www/sync/", 
  #   type: "rsync",
  #   rsync__auto: "true"
     #owner: "www-data",  
     #group: "vagrant", 
     #rsync__exclude: ".svn/"
 
-# config.vm.synced_folder "d:/vagrant/localdev/approot/smb", "/var/www/smb/", 
+# config.vm.synced_folder "d:/www/calleo_all/calleo_smb/", "/var/www/smb/", 
 #    type: "smb"
     #owner: "www-data",  
     #group: "vagrant"

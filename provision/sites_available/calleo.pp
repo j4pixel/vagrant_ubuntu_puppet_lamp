@@ -1,46 +1,46 @@
 $appname = 'calleo'
 
 # make sure app directory is created
-file {"/vagrant/approot/${appname}":
+file {"/var/www/${appname}":
   ensure => directory,
   force => true,
   owner => 'www-data',
   group => 'vagrant',
 }
 
-#vcsrepo { "/vagrant/approot/${appname}/":
+#vcsrepo { "/var/www/${appname}/":
 #        ensure   => present,
 #        provider => svn,
 #        source   => "https://usvn.atomik.virtua.ch/svn/calleov3/trunk/",
-#		require  => File["/vagrant/approot/${appname}"],
+#		require  => File["/var/www/${appname}"],
 #}
 
 
 apache::vhost { "${appname}.local":
   port    => '80',
-  docroot => "/vagrant/approot/${appname}/www/",
+  docroot => "/var/www/${appname}/www/",
   directories  => [ 
-	{ path           => "/vagrant/approot/${appname}/www/", 
+	{ path           => "/var/www/${appname}/www/", 
 	  allow_override => ['All'], 
 	  #WARNING: Space needed at the end of each directory indexes
 	  directoryindex => ['index.php ','index.html '],
 	}, 
   ], 
-#  require  => Vcsrepo["/vagrant/approot/${appname}/"]
+#  require  => Vcsrepo["/var/www/${appname}/"]
 }
 
 apache::vhost { "${appname}-ssl.local":
   port    => '443',
   ssl     => true,
-  docroot => "/vagrant/approot/${appname}/www/",
+  docroot => "/var/www/${appname}/www/",
   directories  => [ 
-	{ path           => "/vagrant/approot/${appname}/www/", 
+	{ path           => "/var/www/${appname}/www/", 
 	  allow_override => ['All'], 
 	  #WARNING: Space needed at the end of each directory indexes
 	  directoryindex => ['index.php ','index.html '],
 	}, 
   ], 
-  require  => File["/vagrant/approot/${appname}/www"],
+  require  => File["/var/www/${appname}/www"],
 }
 
 mysql_database { $appname:

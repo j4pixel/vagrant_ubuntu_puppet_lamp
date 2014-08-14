@@ -2,9 +2,9 @@ $appname2 = 'virtua-laravel-framework'
 
 apache::vhost { "${appname2}.local":
   port    => '80',
-  docroot => "/vagrant/approot/${appname2}/public/",
+  docroot => "/var/www/${appname2}/public/",
   directories  => [ 
-	{ path           => "/vagrant/approot/${appname2}/public/", 
+	{ path           => "/var/www/${appname2}/public/", 
 	  allow_override => ['All'], 
 	  #WARNING: Space needed at the end of each directory indexes
 	  directoryindex => ['index.php ','index.html ']
@@ -15,9 +15,9 @@ apache::vhost { "${appname2}.local":
 apache::vhost { "${appname2}-ssl.local":
   port    => '443',
   ssl     => true,
-  docroot => "/vagrant/approot/${appname2}/public/",
+  docroot => "/var/www/${appname2}/public/",
   directories  => [ 
-	{ path           => "/vagrant/approot/${v}/public/", 
+	{ path           => "/var/www/${v}/public/", 
 	  allow_override => ['All'], 
 	  #WARNING: Space needed at the end of each directory indexes
 	  directoryindex => ['index.php ','index.html ']
@@ -26,7 +26,7 @@ apache::vhost { "${appname2}-ssl.local":
 }
 	
 # make sure app directory is created
-file {"/vagrant/approot/${appname2}":
+file {"/var/www/${appname2}":
   ensure => directory,
   force => true,
   owner => 'www-data',
@@ -34,33 +34,33 @@ file {"/vagrant/approot/${appname2}":
 }
 
 # make sure workbench directory is created
-file {"/vagrant/approot/${appname2}/workbench/":
+file {"/var/www/${appname2}/workbench/":
   ensure => directory,
   recurse => true,
   force => true,
   owner => 'www-data',
   group => 'vagrant',
-  require => File ["/vagrant/approot/${appname2}"]
+  require => File ["/var/www/${appname2}"]
 }
 
 # make sure workbench directory is created
-file {"/vagrant/approot/${appname2}/workbench/virtua":
+file {"/var/www/${appname2}/workbench/virtua":
   ensure => directory,
   recurse => true,
   force => true,
   owner => 'www-data',
   group => 'vagrant',
-  require => File ["/vagrant/approot/${appname2}/workbench"]
+  require => File ["/var/www/${appname2}/workbench"]
 }
 
 # make sure app directory is created
-file {"/vagrant/approot/${appname2}/workbench/virtua/framework":
+file {"/var/www/${appname2}/workbench/virtua/framework":
   ensure => directory,
   recurse => true,
   force => true,
   owner => 'www-data',
   group => 'vagrant',
-  require => File ["/vagrant/approot/${appname2}/workbench/virtua"]
+  require => File ["/var/www/${appname2}/workbench/virtua"]
 }
 
 mysql_database { $appname2:
@@ -70,11 +70,11 @@ mysql_database { $appname2:
   require =>  Class['mysql::server']
 }
 
-#vcsrepo { "/vagrant/approot/${appname2}/workbench/virtua/framework":
+#vcsrepo { "/var/www/${appname2}/workbench/virtua/framework":
 #        ensure   => present,
 #        provider => svn,
 #        source   => "https://usvn.atomik.virtua.ch/svn/virtua-package-framework/branches/refactoring",
-#		require  => File["/vagrant/approot/${appname2}/workbench/virtua/framework"],
+#		require  => File["/var/www/${appname2}/workbench/virtua/framework"],
 #}
 
 

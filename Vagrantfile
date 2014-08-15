@@ -12,11 +12,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise32"
+  config.vm.box = "virtua_localdev"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  config.vm.box_url = "https://owncloud5.virtua.ch/public.php?service=files&t=3f59b92d0cbad2afdccd7d275a63cd96&download"
   
   #Define localhostname
   config.vm.hostname = "localdev"
@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #Configure sync folders
   config.vm.synced_folder "./", "/vagrant", disabled: true
   config.vm.synced_folder "provision", "/vagrant/provision/"
-  config.vm.synced_folder "d:/www/calleo_all/calleo/", "/var/www/calleo/"
+  #config.vm.synced_folder "d:/www/calleo_all/calleo/", "/var/www/calleo/"
     #group: 'www-data', owner: 'www-data', mount_options: ["dmode=775", "fmode=764"]
  
  #config.vm.synced_folder "d:/www/calleo_all/calleo_sync/", "/var/www/sync/", 

@@ -15,8 +15,6 @@ apache::vhost { "${appname4}.local":
   directories  => [ 
 	{ path           => "/var/www/${appname4}/www/", 
 	  allow_override => ['All'], 
-	  #WARNING: Space needed at the end of each directory indexes
-	  directoryindex => ['index.php ','index.html '],
 	}, 
   ], 
 }
@@ -28,8 +26,6 @@ apache::vhost { "${appname4}-ssl.local":
   directories  => [ 
 	{ path           => "/var/www/${appname4}/www/", 
 	  allow_override => ['All'], 
-	  #WARNING: Space needed at the end of each directory indexes
-	  directoryindex => ['index.php ','index.html '],
 	}, 
   ], 
   require  => File["/var/www/${appname4}/www"],

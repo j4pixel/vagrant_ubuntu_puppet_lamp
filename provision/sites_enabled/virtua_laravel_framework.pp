@@ -6,8 +6,6 @@ apache::vhost { "${appname2}.local":
   directories  => [ 
 	{ path           => "/var/www/${appname2}/public/", 
 	  allow_override => ['All'], 
-	  #WARNING: Space needed at the end of each directory indexes
-	  directoryindex => ['index.php ','index.html ']
 	}, 
   ], 
 }
@@ -18,9 +16,7 @@ apache::vhost { "${appname2}-ssl.local":
   docroot => "/var/www/${appname2}/public/",
   directories  => [ 
 	{ path           => "/var/www/${v}/public/", 
-	  allow_override => ['All'], 
-	  #WARNING: Space needed at the end of each directory indexes
-	  directoryindex => ['index.php ','index.html ']
+	  allow_override => ['All'], 	  	 
 	}, 
   ], 
 }

@@ -18,7 +18,6 @@ apache::vhost { "${appname5}.local":
 	{ path           => "/var/www/${appname5}/www/", 
 	  allow_override => ['All'], 
 	  options => ['Indexes', 'FollowSymLinks'],
-	  #directoryindex => ['index.php','index.html'],
 	}
   ], 
 # require  => File["/var/www/${appname5}/www"],
@@ -34,7 +33,6 @@ apache::vhost { "${appname5}-ssl.local":
 	{ path           => "/var/www/${appname5}/www/", 
 	  allow_override => ['All'], 
 	  options => ['Indexes', 'FollowSymLinks'],
-	  #directoryindex => ['index.php','index.html'],
 	}
   ], 
   require  => File["/var/www/${appname5}/www"],

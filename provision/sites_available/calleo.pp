@@ -23,7 +23,6 @@ apache::vhost { "${appname}.local":
 	{ path           => "/var/www/${appname}/www/", 
 	  allow_override => ['All'], 
 	  #WARNING: Space needed at the end of each directory indexes
-	  directoryindex => ['index.php ','index.html '],
 	}, 
   ], 
 #  require  => Vcsrepo["/var/www/${appname}/"]
@@ -37,7 +36,6 @@ apache::vhost { "${appname}-ssl.local":
 	{ path           => "/var/www/${appname}/www/", 
 	  allow_override => ['All'], 
 	  #WARNING: Space needed at the end of each directory indexes
-	  directoryindex => ['index.php ','index.html '],
 	}, 
   ], 
   require  => File["/var/www/${appname}/www"],

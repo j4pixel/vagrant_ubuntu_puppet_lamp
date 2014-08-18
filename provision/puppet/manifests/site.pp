@@ -14,15 +14,23 @@ file_line { 'modify-bashrc':
    line => 'export rvmsudo_secure_path=1',
 }
 
-
-import 'nodes/apt.pp'
-import 'nodes/mysql.pp'
-import 'nodes/apache.pp'
-import 'nodes/php.pp'
-import 'nodes/sites-enabled.pp'
-import 'nodes/xdebug.pp'
-
-class {'composer':
-		 require => Package['php'],		 
+host { 'localhost.localdomain':
+    ensure => 'present',       
+    target => '/etc/hosts',    
+    ip => '127.0.0.1',         
+    host_aliases => ['localhost','localdev']
 }
+
+
+
+#import 'nodes/apt.pp'
+#import 'nodes/mysql.pp'
+#import 'nodes/apache.pp'
+#import 'nodes/php.pp'
+#import 'nodes/sites-enabled.pp'
+#import 'nodes/xdebug.pp'
+
+#class {'composer':
+#		 require => Package['php'],		 
+#}
 

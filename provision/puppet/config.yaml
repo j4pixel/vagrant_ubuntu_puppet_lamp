@@ -10,6 +10,7 @@ packages:
         - make
         - git
         - subversion
+        - sendmail
 apache:
     install: '1'
     settings:
@@ -58,6 +59,7 @@ xdebug:
         xdebug.remote_connect_back: '0'
         xdebug.remote_enable: '1'
         xdebug.remote_handler: dbgp
+        xdebug.remote_host: '10.0.2.2'
         xdebug.remote_port: '9000'
         xdebug.remote_mode: 'req'		
         xdebug.cli_color : '1'
